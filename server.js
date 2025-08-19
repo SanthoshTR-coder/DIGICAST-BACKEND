@@ -12,7 +12,10 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/evoting';
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://digicastt-votingg.vercel.app'], // 
+  credentials: true, // optional if you use cookies
+}));
 app.use(express.json());
 
 // MongoDB connection
