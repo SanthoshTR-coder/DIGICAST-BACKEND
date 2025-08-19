@@ -60,16 +60,40 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     // Send OTP email
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'E-Voting OTP Verification',
-      html: `
-        <h2>E-Voting Account Verification</h2>
-        <p>Your OTP is: <strong>${otp}</strong></p>
-        <p>This OTP will expire in 10 minutes.</p>
-      `
-    };
+  const mailOptions = {
+  from: process.env.EMAIL_USER,
+  to: email,
+  subject: 'Digicast OTP Verification',
+  html: `
+    <div style="font-family: Arial, sans-serif; background-color: #f2f4f8; padding: 30px;">
+      <div style="max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1.2s ease-in-out;">
+        <h2 style="color: #4f46e5; text-align: center;">🔐 Digicast OTP Verification</h2>
+        <p style="font-size: 16px; color: #333;">Hello,</p>
+        <p style="font-size: 15px; color: #555;">Your One-Time Password (OTP) for verifying your Digicast e-voting account is:</p>
+        
+        <div style="margin: 20px 0; padding: 15px; background-color: #4f46e5; color: white; font-size: 24px; font-weight: bold; text-align: center; border-radius: 6px; letter-spacing: 3px; animation: popIn 0.6s ease-in-out;">
+          ${otp}
+        </div>
+        
+        <p style="color: #666; font-size: 14px;">⚠️ This OTP is valid for only <strong>10 minutes</strong>.</p>
+        <p style="color: #999; font-size: 13px; margin-top: 30px; text-align: center;">&copy; ${new Date().getFullYear()} Developed with ❤️ by <strong>Santhosh TR</strong></p>
+      </div>
+    </div>
+
+    <style>
+      @keyframes popIn {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+  `
+};
+
 
     await transporter.sendMail(mailOptions);
 
